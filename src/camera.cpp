@@ -222,33 +222,6 @@ void Camera::updateLockStatus(QCamera::LockStatus status, QCamera::LockChangeRea
     ui->lockButton->setPalette(palette);
 }
 
-//void Camera::takeImage_rec()
-//{
-//    isCapturingImage = true;
-
-//    QDir dir = programRootDir();
-
-//    // Set the imagesRec path
-//    dir.cd(IMAGESREC);
-//    QString imagesRec_path = dir.absolutePath();
-//    imageSaved(1, "myImg_1");
-//    imageCapture->capture(imagesRec_path);
-
-//}
-
-//void Camera::takeImage_input()
-//{
-//    isCapturingImage = true;
-
-//    QDir dir = programRootDir();
-
-//    // Set the imagesTrain path
-//    dir.cd(IMAGESTRAIN);
-//    QString imagesTrain_path = dir.absolutePath();
-//    imageSaved(1, "myImg_1");
-//    imageCapture->capture(imagesTrain_path);
-//}
-
 void Camera::displayCaptureError(int id, const QCameraImageCapture::Error error, const QString &errorString)
 {
     Q_UNUSED(id);
@@ -269,18 +242,7 @@ void Camera::stopCamera()
 
 void Camera::updateCaptureMode()
 {
-//    int tabIndex = ui->captureWidget->currentIndex();
     QCamera::CaptureModes captureMode = QCamera::CaptureStillImage;
-//    if(0 == tabIndex)
-//    {
-//        // do something in table 1
-//        captureMode = QCamera::CaptureStillImage;
-//    }
-//    else
-//    {
-//        // do something in table 2
-//    }
-//    QCamera::CaptureModes captureMode = tabIndex == 0 ? QCamera::CaptureStillImage : QCamera::CaptureVideo;
 
     if (camera->isCaptureModeSupported(captureMode))
         camera->setCaptureMode(captureMode);
@@ -366,9 +328,9 @@ void Camera::on_actionOpen_data_triggered()
 {
     QString path = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files(*.jpg *.png)"));
     if(path.length() == 0) {
-//        QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
+        QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
     } else {
-//        QMessageBox::information(NULL, tr("Path"), tr("You selected ") + path);
+        QMessageBox::information(NULL, tr("Path"), tr("You selected \nThis function is under development.") + path);
     }
 }
 
@@ -492,51 +454,93 @@ void Camera::on_takeImageButton_Rec_clicked()
     BPNN *net;
     if ((net = bpnn_read(netname)) == NULL)
     {
-        // 开始训练
-        facetrain(trainTimes);
+        QMessageBox *trainMessageBox = new QMessageBox();
+        trainMessageBox->setText("开始训练？");
+        trainMessageBox->setInformativeText("找不到网络，是否训练网络？");
+        trainMessageBox->setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+        trainMessageBox->setDefaultButton(QMessageBox::Ok);
+        trainMessageBox->show();
+        int ret = trainMessageBox->exec();
+        switch (ret) {
+          case QMessageBox::Cancel:
+              return;
+          case QMessageBox::Ok:
+              // 开始训练
+              facetrain(trainTimes);
+          default:
+              break;
+        }
+        trainMessageBox->close();
     }
     else
     {
-        //---------------- 识别 ---------------------
-
-        IMAGELIST *imagelist_rec;
-        imagelist_rec = imgl_alloc();
-
-        // 测试集名
-        strcpy(recListName, (str_data_path + RECLISTNAME).c_str());
-
-        // 获取map_userId
-        std::map<std::string, int> *map_userId = new std::map<std::string, int>;
-        map_userId = imgl_get_map_userId(recListName, map_userId);
-
-        if (recListName[0] != '\0')
-            imgl_load_images_from_textfile(imagelist_rec, recListName);
-
-        // 输出识别集中每张图片的匹配情况
-        printf("Matching at the end of the iteration: \n\n");
-        printf("Recognition set : \n\n");
-        // 识别
-        std::string s_userId_rec = result_on_imagelist(net, imagelist_rec, 0, map_userId);
-        QString qs_userId_rec = QString::fromStdString(s_userId_rec);
-
-        if(!userId.isEmpty())
-        {
-            // 判断识别对错
-            if(qs_userId_rec == userId)
+        QMessageBox *trainMessageBox = new QMessageBox();
+        trainMessageBox->setText("开始识别？");
+        trainMessageBox->setInformativeText("已找到网络，是否开始识别？");
+        trainMessageBox->setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
+        trainMessageBox->setDefaultButton(QMessageBox::Ok);
+        trainMessageBox->show();
+        int ret = trainMessageBox->exec();
+        switch (ret) {
+          case QMessageBox::Cancel:
+              return;
+          case QMessageBox::Ok:
             {
-                QMessageBox::about(NULL, "Yes", "I'm <font color='red'>right</font>!\nHe is " + userId + " !\nI guess he is " + qs_userId_rec);
+            //---------------- 开始识别 ---------------------
+
+            IMAGELIST *imagelist_rec;
+            imagelist_rec = imgl_alloc();
+
+            // 测试集名
+            strcpy(recListName, (str_data_path + RECLISTNAME).c_str());
+
+            // 获取map_userId
+            std::map<std::string, int> *map_userId = new std::map<std::string, int>;
+            map_userId = imgl_get_map_userId(recListName, map_userId);
+
+            if (recListName[0] != '\0')
+                imgl_load_images_from_textfile(imagelist_rec, recListName);
+
+            // 输出识别集中每张图片的匹配情况
+            printf("Matching at the end of the iteration: \n\n");
+            printf("Recognition set : \n\n");
+            // 识别
+            std::string s_userId_rec = result_on_imagelist(net, imagelist_rec, 0, map_userId);
+            QString qs_userId_rec = QString::fromStdString(s_userId_rec);
+
+            if(!userId.isEmpty())
+            {
+                // 判断识别对错
+                if(qs_userId_rec == userId)
+                {
+                    QMessageBox::about(NULL, "Yes", "I'm <font color='red'>right</font>!\nHe is " + userId + " !\nI guess he is " + qs_userId_rec);
+                }
+                else if(!qs_userId_rec.isEmpty())
+                {
+                    QMessageBox::about(NULL, "No", "I'm <font color='red'>wrong</font>!\nHe is " + userId + " !\nBut I guess he is " + qs_userId_rec);
+                }
+                else
+                {
+                    QMessageBox::about(NULL, "No", "I'm <font color='red'>wrong</font>!\nHe is " + userId + " !\nBut I don't know who he is.");
+                }
             }
             else
             {
-                qs_userId_rec = QString::fromStdString("Anonymous");
-                QMessageBox::about(NULL, "No", "I'm <font color='red'>wrong</font>!\nHe is " + userId + " !\nBut I guess he is " + qs_userId_rec);
+                if(qs_userId_rec.isEmpty())
+                {
+                    QMessageBox::about(NULL, "No", "I don't know who he is.");
+                }
+                else
+                {
+                    QMessageBox::about(NULL, "OK", "I guess he is " + qs_userId_rec);
+                }
             }
-        }
-        else
-        {
-            QMessageBox::about(NULL, "OK", "I guess he is " + qs_userId_rec);
-        }
+            }
 
+          default:
+              break;
+        }
+        trainMessageBox->close();
 
     }
 }

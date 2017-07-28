@@ -84,7 +84,7 @@ int evaluate_performance(BPNN *net, double *err)
 int performance_on_imagelist(BPNN *net, IMAGELIST *il, int list_errors, std::map<std::string, int> *map_userId)
 {
   double err, val;
-  int i, n, j, correct;
+  int i, n, correct;
 
   err = 0.0;
   correct = 0;
@@ -140,7 +140,7 @@ int performance_on_imagelist(BPNN *net, IMAGELIST *il, int list_errors, std::map
 std::string result_on_imagelist(BPNN *net, IMAGELIST *il, int list_errors, std::map<std::string, int> *map_userId)
 {
   double err, val;
-  int i, n, j, correct;
+  int i, n, correct;
   std::string s_userId;
 
   err = 0.0;
@@ -170,7 +170,7 @@ std::string result_on_imagelist(BPNN *net, IMAGELIST *il, int list_errors, std::
 
       for(int i = 1; i  <= map_userNum; ++i)
       {
-          printf("--output_units-->> %f\n", net->output_units[i]);
+//          printf("--output_units-->> %f\n", net->output_units[i]);
           if(net->output_units[i] > 0.5)
           {
               // 统计输出权值大于0.5的输出单元个数和索引
@@ -423,5 +423,4 @@ void facetrain(int trainingTimes /*int argc, char *argv*/)
     // 假如我们至少有1张图片来训练，那么就开始训练吧！
     backprop_face(trainlist, test1list, test2list, epochs, savedelta, netname, list_errors, map_userId);
 
-//    exit(0);
 }

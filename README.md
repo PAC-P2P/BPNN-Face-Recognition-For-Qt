@@ -14,6 +14,10 @@ Qt 版请戳：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.co
 * 确保训练集与测试集（包括识别）的图片分辨率相同。
 * `User ID`必须唯一，否则会覆盖原用户数据。
 
+## 运行截图
+
+![](http://ojlsgreog.bkt.clouddn.com/CaptureInput.png)
+
 ## 目录结构
 
 请保持以下目录结构，以便程序能正常运行。

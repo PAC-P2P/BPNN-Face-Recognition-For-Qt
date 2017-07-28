@@ -8,7 +8,7 @@ QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = BPNN-Face-Recognition
+TARGET = BPNN-Face-Recognition-For-Qt
 TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS

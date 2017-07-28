@@ -40,7 +40,7 @@ int load_target(IMAGE *img, BPNN *net, std::map<std::string, int> *map_userId)
   {
       if (!strcmp(userid, (map_iter->first).c_str()))
       {
-          net->target[map_iter->second] = TARGET_LOW;
+          net->target[map_iter->second] = TARGET_HIGH;
       }
   }
 

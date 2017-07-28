@@ -343,7 +343,7 @@ void imgl_load_images_from_textfile(IMAGELIST *il, char *filename, std::map<std:
   std::string str_data_path = data_path.toStdString();
 
   int i_userNum = 0, imgNum = 0, scale = 0;
-  char userid[40], imageFormat[40];
+  char userid[40], imageFormat[10];
 
   std::pair< std::map< std::string,int >::iterator,bool > isInsert;
 
@@ -351,11 +351,15 @@ void imgl_load_images_from_textfile(IMAGELIST *il, char *filename, std::map<std:
 
     sscanf(buf, "%*[^/]/%*[^/]/%[^_]_%d_%d.%[^_]", userid, &imgNum, &scale, imageFormat);
 
-    isInsert = map_userId->insert(std::pair<std::string, int>(userid, i_userNum + 1));
-    if(isInsert.second)
+    if(map_userId->find(userid) == map_userId->end())
     {
-        // 插入成功
-        i_userNum++;
+        // 插入
+        isInsert = map_userId->insert(std::pair<std::string, int>(userid, i_userNum + 1));
+        if(isInsert.second)
+        {
+            // 插入成功
+            i_userNum++;
+        }
     }
 
     std::string s_path = str_data_path + "/" + buf;
@@ -403,7 +407,12 @@ std::map<std::string, int> * imgl_get_map_userId(char *filename, std::map<std::s
 
       sscanf(buf, "%*[^/]/%*[^/]/%[^_]_*", userid);
 
-      isInsert = map_userId->insert(std::pair<std::string, int>(userid, i_userNum + 1));
+      if(map_userId->find(userid) == map_userId->end())
+      {
+          // 插入
+          isInsert = map_userId->insert(std::pair<std::string, int>(userid, i_userNum + 1));
+      }
+
       if(isInsert.second)
       {
           // 插入成功

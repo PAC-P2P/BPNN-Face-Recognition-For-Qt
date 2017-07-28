@@ -26,8 +26,6 @@ private slots:
     void stopCamera();
 
     void toggleLock();
-//    void takeImage_rec();
-//    void takeImage_input();
     void displayCaptureError(int, QCameraImageCapture::Error, const QString &errorString);
 
     void configureCaptureSettings();
