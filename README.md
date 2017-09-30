@@ -27,9 +27,11 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
 2. Enter Training times (Default 100 times)
 3. OK (Start training)
 4. Qt console prints training information, evaluation results, such as:
+
 		Iteration number: 100
 		Accuracy rate of: 74.359%
 		Average error: 0.125675
+
 5. Save to data/facenet.net
 6. Successful train
 
@@ -66,7 +68,7 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
 
 2. User ID
 
- `User ID` must be **Unique**, otherwise it will overwrite user data.
+	`User ID` must be **Unique**, otherwise it will overwrite user data.
 
 3. Directory tree
 
