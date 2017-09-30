@@ -124,3 +124,7 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
 ## Data Set
 
 [Neural Networks for Face Recognition](http://www.cs.cmu.edu/afs/cs.cmu.edu/user/mitchell/ftp/faces.html)
+
+## License
+
+[MIT](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Qt/blob/master/LICENSE)
