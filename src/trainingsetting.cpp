@@ -1,4 +1,4 @@
-#include "trainingsetting.h"
+﻿#include "trainingsetting.h"
 #include "ui_trainingsetting.h"
 #include "facetrain.h"
 
@@ -29,7 +29,15 @@ void TrainingSetting::on_buttonBox_accepted()
     }
     else
     {
-        facetrain(trainingTimes);
+        try{
+            facetrain(trainingTimes);
+        }
+        catch(QString exception)
+        {
+            QMessageBox::warning(NULL,"Exception",exception);
+            return;
+        }
+
         QMessageBox::about(NULL, "Completed", "Training is completed!");
     }
 }

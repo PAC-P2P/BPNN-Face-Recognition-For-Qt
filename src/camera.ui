@@ -155,7 +155,7 @@
     <item row="4" column="1" colspan="2">
      <widget class="QTabWidget" name="captureWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -272,6 +272,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -303,8 +304,8 @@
     <property name="title">
      <string>Data</string>
     </property>
-    <addaction name="actionOpen_data"/>
-    <addaction name="actionInput_data"/>
+    <addaction name="actionOpen_Image"/>
+    <addaction name="actionSave_Image"/>
    </widget>
    <widget class="QMenu" name="menuNet">
     <property name="title">
@@ -320,7 +321,6 @@
    <addaction name="menuData"/>
    <addaction name="menuNet"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
@@ -351,14 +351,14 @@
     <string>Save Net</string>
    </property>
   </action>
-  <action name="actionOpen_data">
+  <action name="actionOpen_Image">
    <property name="text">
-    <string>Open data</string>
+    <string>Open Image</string>
    </property>
   </action>
-  <action name="actionInput_data">
+  <action name="actionSave_Image">
    <property name="text">
-    <string>Save data</string>
+    <string>Save Image</string>
    </property>
   </action>
   <action name="actionTraining">

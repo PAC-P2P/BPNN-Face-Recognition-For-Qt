@@ -1,31 +1,82 @@
-# 基于并行BP神经网络的人脸识别系统
+# BPNN-Face-Recognition-For-Qt
 
-此为 **QT版** 的人脸识别系统
+A Face Recognition System Based on BP(Back Propagation) Neural Network Developed by Qt.
 
-并行版请戳：[Github . PAC-P2P/BPNN-Face-Recognition-For-Parallel](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Parallel)
+Parallel Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Parallel](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Parallel)
 
-串行版请戳：[Github . PAC-P2P/BPNN-Face-Recognition](https://github.com/PAC-P2P/BPNN-Face-Recognition)
+Serial Version：[Github . PAC-P2P/BPNN-Face-Recognition](https://github.com/PAC-P2P/BPNN-Face-Recognition)
 
-Qt 版请戳：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Qt)
+Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Qt)
 
-## 注意事项
 
-* 确保程序目录结构正确（如下**目录结构**）。
-* 确保训练集与测试集（包括识别）的图片分辨率相同。
-* `User ID`必须唯一，否则会覆盖原用户数据。
+## Usage
 
-## 运行截图
+### Run
 
-![](http://ojlsgreog.bkt.clouddn.com/CaptureInput.png)
+1. git clone https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Qt.git
 
-## 目录结构
+2. Use **Qt** to open `BPNN-Face-Recognition-For-Qt.pro`
 
-请保持以下目录结构，以便程序能正常运行。
+3. Generate / Run
+
+### Use
+
+#### Train
+
+1. Menu Bar - Net - Training
+2. Enter Training times (Default 100 times)
+3. OK (Start training)
+4. Qt console prints training information, evaluation results, such as:
+		Iteration number: 100
+		Accuracy rate of: 74.359%
+		Average error: 0.125675
+5. Save to data/facenet.net
+6. Successful train
+
+#### Input Images
+
+1. Input
+2. Enter User ID (Unique)
+3. Enter Train times (Default 100 times)
+4. Take photo 20 times (Save to data\images\imagesTrain)
+5. Train
+6. Successful input
+
+#### Recognition
+
+1. Enter name (Optional)
+2. Take Photo (Save to data\images\imagesRec\rec_01.pgm)
+3. Train (if no facenet.net)
+4. Recognition
+5. Recognition result
+
+## Warning
+
+1. Images Size
+
+	Make sure that the training set image has **the same image size** as the test set (including recognition).
+
+	There are three sizes of images in `data\images`.
+
+	* UserID_\*_1.pgm : 128 * 120
+	* UserID_\*_2.pgm : 64 * 60
+	* UserID_\*_3.pgm : 32 * 30
+
+	If your camera is not of these sizes please delete it(Including modifying data/*.list) and enter your own photo.
+
+2. User ID
+
+ `User ID` must be **Unique**, otherwise it will overwrite user data.
+
+3. Directory tree
+
+	Please keep the following directory structure so that the program can run normally.
+
 
 	.
 	├── BPNN-Face-Recognition.pro
 	├── Release
-	│   └── BPNN-Face-Recognition.app
+	│   └── BPNN-Face-Recognition.exe
 	├── data
 	│   ├── facenet.net
 	│   ├── images
@@ -64,6 +115,11 @@ Qt 版请戳：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.co
     	├── trainingsetting.h
     	└── trainingsetting.ui
 
-## 数据集
+
+## Screenshots
+
+![CaptureInput](CaptureInput.png)
+
+## Data Set
 
 [Neural Networks for Face Recognition](http://www.cs.cmu.edu/afs/cs.cmu.edu/user/mitchell/ftp/faces.html)

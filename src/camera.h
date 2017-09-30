@@ -48,13 +48,19 @@ private slots:
     void readyForCapture(bool ready);
     void imageSaved(int id, const QString &fileName);
 
-    void on_actionTraining_triggered();
-
-    void on_actionOpen_data_triggered();
-
     void on_takeImageButton_Input_clicked();
 
     void on_takeImageButton_Rec_clicked();
+
+    void on_actionOpen_Image_triggered();
+
+    void on_actionSave_Image_triggered();
+
+    void on_actionOpen_Net_triggered();
+
+    void on_actionSave_Net_triggered();
+
+    void on_actionTraining_triggered();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

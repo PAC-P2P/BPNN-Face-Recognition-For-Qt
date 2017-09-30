@@ -39,9 +39,18 @@ FORMS    += \
     imagesettings.ui \
     trainingsetting.ui
 
-
-macx{
 #指定生成路径
 DESTDIR = $$PWD/../Release
 
+win32 {
+
+}
+
+macx {
+
+}
+
+unix:!macx{
+    QMAKE_CC    =   gcc
+    QMAKE_CXX   =   g++
 }

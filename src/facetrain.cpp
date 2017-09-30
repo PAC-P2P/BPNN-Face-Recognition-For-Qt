@@ -1,5 +1,6 @@
-#include <QDir>
+﻿#include <QDir>
 #include <QString>
+#include <QDebug>
 
 #include <math.h>
 #include <stdio.h>
@@ -165,7 +166,7 @@ std::string result_on_imagelist(BPNN *net, IMAGELIST *il, int list_errors, std::
       // 输出图片的名称
       printf("Picture name: %s\n", NAME(il->list[i]));
 
-      int map_userNum = map_userId->size(), i_flag_num = 0, i_flag_i = 0;
+      int map_userNum = (int)map_userId->size(), i_flag_num = 0, i_flag_i = 0;
       std::map<std::string, int>::iterator map_iter;
 
       for(int i = 1; i  <= map_userNum; ++i)
@@ -227,7 +228,7 @@ int backprop_face(IMAGELIST *trainlist, IMAGELIST *test1list, IMAGELIST *test2li
   BPNN *net;
   int train_n, epoch, i, imgsize;
   double out_err, hid_err, sumerr;
-  int userNum = map_userId->size();
+  int userNum = (int)map_userId->size();
 
   train_n = trainlist->n;
 
@@ -396,7 +397,7 @@ void facetrain(int trainingTimes /*int argc, char *argv*/)
     if (testname2[0] != '\0')
         imgl_load_images_from_textfile(test2list, testname2);
 
-    userNum = map_userId->size();
+    userNum = (int)map_userId->size();
     if(userNum == 0)
     {
         printf("The training set has no user data!\n");
@@ -408,7 +409,6 @@ void facetrain(int trainingTimes /*int argc, char *argv*/)
         epochs = 0;
     }
 
-    /*** 显示训练集，测试集1，测试集2中图片数量 ***/
     /*** Show number of images in train, test1, test2 ***/
     printf("%d images in training set\n", trainlist->n);
     printf("%d images in test1 set\n", test1list->n);

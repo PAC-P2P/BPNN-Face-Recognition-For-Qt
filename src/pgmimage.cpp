@@ -1,4 +1,4 @@
-#include "pgmimage.h"
+﻿#include "pgmimage.h"
 #include "dir.h"
 
 #define MAXLISTBUF 20000
@@ -15,7 +15,7 @@ char *img_basename(char *filename)
   char *p_new, *part;
   int len, dex;
 
-  len = strlen(filename);  dex = len - 1;
+  len = (int)strlen(filename);  dex = len - 1;
   while (dex > -1) {
     if (filename[dex] == '/') {
       break;
@@ -25,7 +25,7 @@ char *img_basename(char *filename)
   }
   dex++;
   part = &(filename[dex]);
-  len = strlen(part);
+  len = (int)strlen(part);
   p_new = (char *) malloc ((unsigned) ((len + 1) * sizeof (char)));
   strcpy(p_new, part);
   return(p_new);

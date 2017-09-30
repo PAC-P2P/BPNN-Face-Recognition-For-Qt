@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
@@ -7,6 +7,10 @@
 #include <fcntl.h>
 
 #include "backprop.h"
+
+#if __cplusplus > 199711L
+#define register      // Deprecated in C++11.
+#endif  // #if __cplusplus > 199711L
 
 #define ABS(x)  (((x) > 0.0) ? (x) : (-(x)))
 
@@ -20,18 +24,28 @@
   for (_i = 0; _i < _l; _i++) *_to++ = *_from++;\
 }
 
+
 // 用输入的种子(seed)初始化随机数生成器
 void bpnn_initialize(int seed)
 {
-  printf("Random number generator seed: %d\n", seed);
-  srandom(seed);
+    printf("Random number generator seed: %d\n", seed);
+
+#ifdef WIN32
+    srand(seed);
+#else
+    srandom(seed);
+#endif
 }
 
 
 /*** Return random number between 0.0 and 1.0 ***/
 double drnd()
 {
-  return ((double) random() / (double) BIGRND);
+#ifdef WIN32
+    return ((double) rand() / (double) BIGRND);
+#else
+    return ((double) random() / (double) BIGRND);
+#endif
 }
 
 
@@ -356,7 +370,13 @@ void bpnn_save(BPNN *net, char *filename)
   double dvalue, **w;
   char *mem;
 
-  if ((fd = creat(filename, 0644)) == -1) {
+  //MSVC(Windows) can not use:
+//  fd = creat(filename, 0644);
+
+  //MSVC(Windows) use:
+  fd = open(filename ,(O_CREAT|O_WRONLY|O_TRUNC));
+
+  if (fd == -1) {
     printf("BPNN_SAVE: Cannot create '%s'\n", filename);
     return;
   }

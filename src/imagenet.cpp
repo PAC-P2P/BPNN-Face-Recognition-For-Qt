@@ -1,4 +1,4 @@
-#include "imagenet.h"
+﻿#include "imagenet.h"
 
 //extern void exit();
 //extern int img_getpixel();
@@ -24,7 +24,7 @@ int load_target(IMAGE *img, BPNN *net, std::map<std::string, int> *map_userId)
   char userid[40], photo[40];
   userid[0] = photo[0] = '\0';
 
-  int userNum = map_userId->size();
+  int userNum = (int)map_userId->size();
 
   /*** scan in the image features ***/
   sscanf(NAME(img), "%[^_]_%d_%d.%[^_]", userid, &imgNum, &scale, photo);

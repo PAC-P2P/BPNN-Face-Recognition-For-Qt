@@ -9,8 +9,3 @@ TEMPLATE = subdirs
 SUBDIRS =  src
 
 DISTFILES += \
-
-unix{
-    QMAKE_CC    =   gcc
-    QMAKE_CXX   =   g++
-}

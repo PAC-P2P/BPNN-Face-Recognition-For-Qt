@@ -1,4 +1,4 @@
-#include "camera.h"
+﻿#include "camera.h"
 #include "ui_camera.h"
 #include "imagesettings.h"
 #include "trainingsetting.h"
@@ -106,8 +106,9 @@ void Camera::setCamera(const QCameraInfo &cameraInfo)
     connect(camera, SIGNAL(lockStatusChanged(QCamera::LockStatus,QCamera::LockChangeReason)),
             this, SLOT(updateLockStatus(QCamera::LockStatus,QCamera::LockChangeReason)));
 
-    ui->captureWidget->setTabEnabled(0, (camera->isCaptureModeSupported(QCamera::CaptureStillImage)));
-    ui->captureWidget->setTabEnabled(1, (camera->isCaptureModeSupported(QCamera::CaptureVideo)));
+    bool isCaptureSupported = camera->isCaptureModeSupported(QCamera::CaptureStillImage);
+    ui->captureWidget->setTabEnabled(0, isCaptureSupported);
+    ui->captureWidget->setTabEnabled(1, isCaptureSupported);
 
     updateCaptureMode();
     camera->start();
@@ -318,22 +319,6 @@ void Camera::closeEvent(QCloseEvent *event)
     }
 }
 
-void Camera::on_actionTraining_triggered()
-{
-    TrainingSetting training;
-    training.exec();
-}
-
-void Camera::on_actionOpen_data_triggered()
-{
-    QString path = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files(*.jpg *.png)"));
-    if(path.length() == 0) {
-        QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
-    } else {
-        QMessageBox::information(NULL, tr("Path"), tr("You selected \nThis function is under development.") + path);
-    }
-}
-
 void Camera::on_takeImageButton_Input_clicked()
 {
     // 第一次录入时记录用户ID和训练次数
@@ -347,13 +332,13 @@ void Camera::on_takeImageButton_Input_clicked()
         // 对用户ID进行判空
         if(userId.isEmpty())
         {
-            QMessageBox::warning(NULL, "Warning", "Please input User ID !", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+            QMessageBox::warning(NULL, tr("Warning"), tr("Please input User ID !"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
             return;
         }
         // 判断训练次数的正确性
         if(trainTimes < 1 || trainTimes > MAXTRAINTIMES)
         {
-            QMessageBox::warning(NULL, "Warning", "Please input a correct train times !", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+            QMessageBox::warning(NULL, tr("Warning"), tr("Please input a correct train times !"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
             return;
         }
     }
@@ -388,7 +373,7 @@ void Camera::on_takeImageButton_Input_clicked()
         // 写入训练集与测试集
         if(-1 == file_train.write(dir_input.toLatin1(), dir_input.length()) || (-1 == file_testAll.write(dir_input.toLatin1(), dir_input.length())))
         {
-            QMessageBox::warning(NULL, "Warning", "Fail to write the file!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+            QMessageBox::warning(NULL, tr("Warning"), tr("Fail to write the file!"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
             file_train.close();
             file_testAll.close();
             return;
@@ -396,7 +381,7 @@ void Camera::on_takeImageButton_Input_clicked()
     }
     else
     {
-        QMessageBox::warning(NULL, "Warning", "Fail to open the file!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Fail to open the file!"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     file_train.close();
@@ -416,7 +401,7 @@ void Camera::on_takeImageButton_Input_clicked()
         ui->label_photoTimes->clear();
         ui->label_photoTimes->setText(QString::fromStdString("Take photo " + std::to_string(INPUTTIMES) + " times"));
 
-        QMessageBox::StandardButton questionButton = QMessageBox::question(NULL, "Start training?", "Has taken " + QString::number(INPUTTIMES) + " times! \nDo you start training?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::StandardButton questionButton = QMessageBox::question(NULL, tr("Start training?"), tr("Has taken ") + QString::number(INPUTTIMES) + tr(" times! \nDo you start training?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         if(questionButton == QMessageBox::Yes)
         {
             // 开始训练
@@ -455,8 +440,8 @@ void Camera::on_takeImageButton_Rec_clicked()
     if ((net = bpnn_read(netname)) == NULL)
     {
         QMessageBox *trainMessageBox = new QMessageBox();
-        trainMessageBox->setText("开始训练？");
-        trainMessageBox->setInformativeText("找不到网络，是否训练网络？");
+        trainMessageBox->setText(tr("开始训练？"));
+        trainMessageBox->setInformativeText(tr("找不到网络，是否训练网络？"));
         trainMessageBox->setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
         trainMessageBox->setDefaultButton(QMessageBox::Ok);
         trainMessageBox->show();
@@ -475,8 +460,8 @@ void Camera::on_takeImageButton_Rec_clicked()
     else
     {
         QMessageBox *trainMessageBox = new QMessageBox();
-        trainMessageBox->setText("开始识别？");
-        trainMessageBox->setInformativeText("已找到网络，是否开始识别？");
+        trainMessageBox->setText(tr("开始识别？"));
+        trainMessageBox->setInformativeText(tr("已找到网络，是否开始识别？"));
         trainMessageBox->setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
         trainMessageBox->setDefaultButton(QMessageBox::Ok);
         trainMessageBox->show();
@@ -513,26 +498,26 @@ void Camera::on_takeImageButton_Rec_clicked()
                 // 判断识别对错
                 if(qs_userId_rec == userId)
                 {
-                    QMessageBox::about(NULL, "Yes", "I'm <font color='red'>right</font>!\nHe is " + userId + " !\nI guess he is " + qs_userId_rec);
+                    QMessageBox::about(NULL, tr("Yes"), tr("I'm <font color='red'>right</font>!\nHe is ") + userId + tr(" !\nI guess he is ") + qs_userId_rec);
                 }
                 else if(!qs_userId_rec.isEmpty())
                 {
-                    QMessageBox::about(NULL, "No", "I'm <font color='red'>wrong</font>!\nHe is " + userId + " !\nBut I guess he is " + qs_userId_rec);
+                    QMessageBox::about(NULL, tr("No"), tr("I'm <font color='red'>wrong</font>!\nHe is ") + userId + tr(" !\nBut I guess he is ") + qs_userId_rec);
                 }
                 else
                 {
-                    QMessageBox::about(NULL, "No", "I'm <font color='red'>wrong</font>!\nHe is " + userId + " !\nBut I don't know who he is.");
+                    QMessageBox::about(NULL, tr("No"), tr("I'm <font color='red'>wrong</font>!\nHe is ") + userId + tr(" !\nBut I don't know who he is."));
                 }
             }
             else
             {
                 if(qs_userId_rec.isEmpty())
                 {
-                    QMessageBox::about(NULL, "No", "I don't know who he is.");
+                    QMessageBox::about(NULL, tr("No"), tr("I don't know who he is."));
                 }
                 else
                 {
-                    QMessageBox::about(NULL, "OK", "I guess he is " + qs_userId_rec);
+                    QMessageBox::about(NULL, tr("OK"), tr("I guess he is ") + qs_userId_rec);
                 }
             }
             }
@@ -543,4 +528,35 @@ void Camera::on_takeImageButton_Rec_clicked()
         trainMessageBox->close();
 
     }
+}
+
+void Camera::on_actionOpen_Image_triggered()
+{
+    QString path = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files(*.jpg *.jpeg *.png *.bmp *.pgm)"));
+    if(path.length() == 0) {
+        QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
+    } else {
+        QMessageBox::information(NULL, tr("Path"), tr("[This module is being developed!]\nYou selected\n") + path);
+    }
+}
+
+void Camera::on_actionSave_Image_triggered()
+{
+    QMessageBox::information(NULL, tr("Developing"), tr("This module is being developed!"));
+}
+
+void Camera::on_actionOpen_Net_triggered()
+{
+    QMessageBox::information(NULL, tr("Developing"), tr("This module is being developed!"));
+}
+
+void Camera::on_actionSave_Net_triggered()
+{
+    QMessageBox::information(NULL, tr("Developing"), tr("This module is being developed!"));
+}
+
+void Camera::on_actionTraining_triggered()
+{
+    TrainingSetting training;
+    training.exec();
 }
