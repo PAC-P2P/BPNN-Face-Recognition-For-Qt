@@ -72,48 +72,47 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
 
 	Please keep the following directory structure so that the program can run normally.
 
-
-	.
-	├── BPNN-Face-Recognition.pro
-	├── Release
-	│   └── BPNN-Face-Recognition.exe
-	├── data
-	│   ├── facenet.net
-	│   ├── images
-	│   │   ├── imagesRec
-	│   │   │   └── rec_01.pgm
-	│   │   └── imagesTrain
-	│   │       ├── an2i_1_1.pgm
-	│   │       ├── ...(images)
-	│   │       └── cheyer_8_3.pgm
-	│   ├── imagesSet_rec.list
-	│   ├── imagesSet_testAll.list
-	│   └── straightrnd_train.list
-	└── src
-    	├── backprop.cpp
-    	├── backprop.h
-    	├── camera.cpp
-    	├── camera.h
-    	├── camera.ui
-    	├── dir.cpp
-    	├── dir.h
-    	├── facetrain.cpp
-    	├── facetrain.h
-    	├── imagenet.cpp
-    	├── imagenet.h
-    	├── imagesettings.cpp
-    	├── imagesettings.h
-    	├── imagesettings.ui
-    	├── main.cpp
-    	├── mainwindow.cpp
-    	├── mainwindow.h
-    	├── mainwindow.ui
-    	├── pgmimage.cpp
-    	├── pgmimage.h
-    	├── src.pro
-    	├── trainingsetting.cpp
-    	├── trainingsetting.h
-    	└── trainingsetting.ui
+		.
+		├── BPNN-Face-Recognition.pro
+		├── Release
+		│   └── BPNN-Face-Recognition.exe
+		├── data
+		│   ├── facenet.net
+		│   ├── images
+		│   │   ├── imagesRec
+		│   │   │   └── rec_01.pgm
+		│   │   └── imagesTrain
+		│   │       ├── an2i_1_1.pgm
+		│   │       ├── ...(images)
+		│   │       └── cheyer_8_3.pgm
+		│   ├── imagesSet_rec.list
+		│   ├── imagesSet_testAll.list
+		│   └── straightrnd_train.list
+		└── src
+    		├── backprop.cpp
+    		├── backprop.h
+    		├── camera.cpp
+    		├── camera.h
+    		├── camera.ui
+    		├── dir.cpp
+    		├── dir.h
+    		├── facetrain.cpp
+    		├── facetrain.h
+    		├── imagenet.cpp
+    		├── imagenet.h
+    		├── imagesettings.cpp
+    		├── imagesettings.h
+    		├── imagesettings.ui
+    		├── main.cpp
+    		├── mainwindow.cpp
+    		├── mainwindow.h
+    		├── mainwindow.ui
+    		├── pgmimage.cpp
+    		├── pgmimage.h
+    		├── src.pro
+    		├── trainingsetting.cpp
+    		├── trainingsetting.h
+    		└── trainingsetting.ui
 
 
 ## Screenshots
