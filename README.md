@@ -40,17 +40,27 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
 1. Input
 2. Enter User ID (Unique)
 3. Enter Train times (Default 100 times)
-4. Take photo 20 times (Save to data\images\imagesTrain)
+4. Take photo 20 times (Save to data/images/imagesTrain)
 5. Train
 6. Successful input
 
 #### Recognition
 
 1. Enter name (Optional)
-2. Take Photo (Save to data\images\imagesRec\rec_01.pgm)
+2. Take Photo (Save to data/images/imagesRec/rec_01.pgm)
 3. Train (if no facenet.net)
 4. Recognition
 5. Recognition result
+
+## Neural network structure
+
+1. `facenet.net` is a three-layer neural network with only one hidden layer
+
+	* Input Layer : The size of the images
+	* Hidden Layer : Number of training sets
+	* Output Layer : Number of training sets
+
+2. Neural network structure file: `data/facenet.net`. It is a `15360 * 6 * 6` neural network
 
 ## Warning
 
@@ -58,7 +68,7 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
 
 	Make sure that the training set image has **the same image size** as the test set (including recognition).
 
-	There are three sizes of images in `data\images`.
+	There are three sizes of images in `data/images`.
 
 	* UserID_\*_1.pgm : 128 * 120
 	* UserID_\*_2.pgm : 64 * 60
@@ -116,6 +126,16 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
     		├── trainingsetting.h
     		└── trainingsetting.ui
 
+# Options
+
+* `SEED` : Seed of a random generator (Default `102194`)
+* `SAVEDELTA` : Save the network every SAVEDELTA times (Default `100`)
+* `LEARNRATE` : Learning rate (Default `0.3`)
+* `IMPULSE` : Impulse (Default `0.3`)
+* `INPUTTIMES` : Maximum number of photos inputed (Default `20`)
+* `MAXTRAINTIMES` : Maximum training times (Default `100000`)
+
+Modify these in `facetrain.cpp` or `camera.cpp`
 
 ## Screenshots
 
