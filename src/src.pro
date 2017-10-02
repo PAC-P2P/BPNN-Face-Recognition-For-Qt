@@ -44,6 +44,14 @@ DESTDIR = $$PWD/../Release
 
 win32 {
 
+LIBS += libQt5Core \
+libQt5Gui \
+libQt5Multimedia \
+libQt5MultimediaWidgets \
+libQt5Network \
+libQt5OpenGL \
+libQt5Widgets
+
 }
 
 macx {

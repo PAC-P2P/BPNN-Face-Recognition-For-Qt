@@ -1,6 +1,6 @@
 # BPNN-Face-Recognition-For-Qt
 
-A Face Recognition System Based on BP(Back Propagation) Neural Network Developed by Qt.
+A Face Recognition System Based on BPNN(Back Propagation Neural Network) Developed by Qt.
 
 Parallel Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Parallel](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Parallel)
 
