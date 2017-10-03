@@ -9,6 +9,10 @@ Serial Version：[Github . PAC-P2P/BPNN-Face-Recognition](https://github.com/PAC
 Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Qt)
 
 
+## Download
+ 
+[BPNN-Face-Recognition-For-Qt / releases](https://github.com/PAC-P2P/BPNN-Face-Recognition-For-Qt/releases)
+
 ## Usage
 
 ### Run
@@ -124,7 +128,7 @@ Qt Version：[Github . PAC-P2P/BPNN-Face-Recognition-For-Qt](https://github.com/
     		├── src.pro
     		├── trainingsetting.cpp
     		├── trainingsetting.h
-    		└── trainingsetting.ui
+    		└── trainingsetting.ui
 
 # Options
 
